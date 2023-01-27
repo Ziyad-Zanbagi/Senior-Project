@@ -31,6 +31,12 @@ allergies = {
     "chocolate": {
         "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا"]
     },
+    "lactose": {
+        "causes": ["null"]
+    },
+    "nuts": {
+        "causes": ["فستق", "لوز","كاجو"]
+    },
 
 }
 # url hosted in local device by node.js
@@ -47,7 +53,7 @@ def checkRequest(allergies):
         user_request = tasks.pop(0)
 
         # get task id of the new task from list of tasks
-        requests.delete((api_url + f"/{user_request['id']}"))
+        # requests.delete((api_url + f"/{user_request['id']}"))
 
         print(tasks)
         print(user_request)
@@ -69,7 +75,9 @@ def checkRequest(allergies):
                 image_result.write(image_64_decode)
             # if the above condition were not met, it will check if the allergy is true and put it into a list
             else:
-                if user_request[key]:
+
+                if user_request[key] == "true":
+                    print(user_request[key])
                     user_allergy.append(key)
         #  here it will start the OCR function
         allergic_found = []
