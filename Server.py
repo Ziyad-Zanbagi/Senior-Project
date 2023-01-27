@@ -7,28 +7,28 @@ import pytesseract
 
 allergies = {
     "peanuts": {
-        "causes": ["peanuts"]
+        "causes": ["فول السوداني", "زبدة الفول السوداني"]
     },
     "milk": {
-        "causes": ["milk"]
+        "causes": ["حليب", "الحليب"]
     },
     "fish": {
-        "causes": ["fish"]
+        "causes": ["السمك", "سمك", "اسماك"]
     },
     "strawberry": {
-        "causes": ["strawberry"]
+        "causes": ["الفراولة", "فراولة"]
     },
     "eggs": {
-        "causes": ["eggs"]
+        "causes": ["البيض", "بيض"]
     },
     "wheat": {
-        "causes": ["wheat"]
+        "causes": ["فمح", "القمح"]
     },
     "mango": {
-        "causes": ["mango"]
+        "causes": ["مانجو", "المانجو"]
     },
     "chocolate": {
-        "causes": ["chocolate"]
+        "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا"]
     },
 
 }
@@ -37,7 +37,6 @@ api_url = "https://36d1-31-166-28-3.in.ngrok.io/posts"
 
 
 def checkRequest(allergies):
-
     response = requests.get(api_url)
     tasks = response.json()
     # check if there are any elements in the
@@ -47,7 +46,7 @@ def checkRequest(allergies):
         user_request = tasks.pop(0)
 
         # get task id of the new task from list of tasks
-        requests.delete((api_url+f"/{user_request['id']}"))
+        requests.delete((api_url + f"/{user_request['id']}"))
         print(tasks)
         print(user_request)
         print("code will begin with task id")
@@ -67,7 +66,7 @@ def checkRequest(allergies):
         # write OCR and begin OCR
 
         # allergies = ["الفول السوداني", "حليب", "سمكة", "الفراولة", "بيض", "قمح", "مانجو", "شوكولاتة"]
-        user_allergy=[]
+        user_allergy = []
         for key in user_request:
             if key == "id":
                 user_id = user_request["id"]
@@ -85,32 +84,30 @@ def checkRequest(allergies):
                     user_allergy.append(key)
         print(user_allergy)
         print(user_id)
+        allergic_found = []
 
+        # if allergen in allergies:
+        #     print(allergies[allergen]["causes"][0])
+        # else:
+        #     print("it does not exists")
+        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+        image = pytesseract.image_to_string(Image.open('test.png'), lang='ara')
 
-            # for allergen in user_allergy:
-            #     if allergen in allergies:
-            #         print(allergies[allergen]["causes"][0])
-            #     else:
-            #         print("it does not exists")
-            # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-            # image = pytesseract.image_to_string(Image.open('mango.jpg'), lang='ara')
-            # print(image)
-            # something = list(re.split(r"[-;,.\s]\s*", image))
-            # print(len(something))
-            # print(something)
-            # allergic_found = []
-            # print("--------------------------------------------------------------------")
-            # for allergy in user_allergy:
-            #     if allergy in something:
-            #         print(allergy)
-            #         allergic = True
-            #         allergic_found.append(allergy)
-            # print(f"allergic found {allergic_found}")
+        ocr_text = list(re.split(r"[-«»;ء؛,.\s]\s*", image))
+        print(ocr_text)
+        for allergen in user_allergy:
+            for causes in allergies[allergen]["causes"]:
+                if causes in ocr_text:
+                    print(allergen)
+                    allergic = True
+                    allergic_found.append(allergen)
+        print(f"allergic found {allergic_found}")
 
     else:
         print("list is empty")
 
-while(True):
+
+while (True):
     # code for the server to run indefinitely and check for tasks
     # that will be sent from the front-end
     print("working")
