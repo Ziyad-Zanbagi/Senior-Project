@@ -9,7 +9,7 @@ print(encoded_string)
 encoded_string = encoded_string.decode('utf-8')
 
 
-todo = {"id": 72, "request_title": "detect allergy", "success": False, "task_id": 2, "image": encoded_string}
+todo = {"uid": "sHk8cUucnNZ4Aqd4pWJ2JP3IsPo2", "request_title": "detect allergy", "success": False, "task_id": 2, "image": encoded_string}
 
 response = requests.post(api_url, json=todo)
 print(response.json())
