@@ -5,7 +5,6 @@ import re
 from PIL import Image
 import pytesseract
 
-
 # this is a dictionary of allergies and their causes
 allergies = {
     "peanuts": {
@@ -53,7 +52,7 @@ def checkRequest(allergies):
         print(tasks)
         print(user_request)
         # split requests based on key that came from user request
-        # the request contains a id,image, and all allergies
+        # the request contains an id,image, and all allergies
         user_allergy = []
         for key in user_request:
             # if the key was id it will take the value and put in another variable
