@@ -1,6 +1,6 @@
 import requests
 import base64
-api_url = "http://localhost:3000/tasks/"
+api_url = "https://36d1-31-166-28-3.in.ngrok.io/posts"
 #api_url = "http://localhost:3000
 
 with open("images/dew.png", "rb") as image_file:

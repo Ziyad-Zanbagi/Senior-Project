@@ -105,6 +105,9 @@ def checkRequest(allergies):
         url_back = "https://36d1-31-166-28-3.in.ngrok.io/tasks"
         response = requests.post(url_back, json=todo)
 
+        time.sleep(20)
+        print("request is done. deleting from json")
+        requests.delete((url_back + f"/{user_id}"))
     else:
         print("list is empty")
 
