@@ -106,7 +106,7 @@ def checkRequest(allergies):
         response = requests.post(url_back, json=todo)
 
         time.sleep(20)
-        print("request is done. deleting from json")
+        print("request is done. deleting request from json")
         requests.delete((url_back + f"/{user_id}"))
     else:
         print("list is empty")
