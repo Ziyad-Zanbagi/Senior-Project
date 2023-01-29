@@ -53,7 +53,7 @@ def checkRequest(allergies):
         user_request = tasks.pop(0)
 
         # get task id of the new task from list of tasks
-        # requests.delete((api_url + f"/{user_request['id']}"))
+        requests.delete((api_url + f"/{user_request['id']}"))
 
         print(tasks)
         print(user_request)
@@ -105,7 +105,7 @@ def checkRequest(allergies):
         url_back = "https://36d1-31-166-28-3.in.ngrok.io/tasks"
         response = requests.post(url_back, json=todo)
 
-        time.sleep(20)
+        time.sleep(10)
         print("request is done. deleting request from json")
         requests.delete((url_back + f"/{user_id}"))
     else:
