@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 /////////////////////
@@ -15,8 +17,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../class/allergies.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -43,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Uint8List? bytes;
   String? img64;
 
-  Future<void> getImage() async {
+  Future<void> getImage(ImageSource source) async {
     var picker = ImagePicker();
     PickedFile? image;
-    image = await picker.getImage(source: ImageSource.gallery);
+    image = await picker.getImage(source: source);
     if (image!.path.isEmpty == false) {
       setState(() {
         _image = File(image!.path);
@@ -94,9 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Peanuts = value.get('peanuts'),
           strawberry = value.get('strawberry')
         });
-    CircularProgressIndicator(
-      value: 0.9,
-    );
   }
 
   void SetAller() {
@@ -191,7 +188,14 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GestureDetector(
               onTap: () {
                 SetAellergies();
-                getImage();
+                getImage(ImageSource.gallery);
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(child: CircularProgressIndicator());
+                  },
+                );
+                timerup();
               },
               child: Container(
                 padding: const EdgeInsets.all(16),
@@ -225,8 +229,14 @@ class _HomeScreenState extends State<HomeScreen> {
               child: GestureDetector(
                 onTap: () {
                   SetAellergies();
-                  getImage();
-                  ResultScr();
+                  getImage(ImageSource.camera);
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(child: CircularProgressIndicator());
+                    },
+                  );
+                  timerup();
                 },
                 child: Container(
                   padding: const EdgeInsets.all(16),
@@ -252,9 +262,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
                 ),
               )),
-          _image != null ? Image.file(_image!) : Text('no image caputre')
         ])),
       ),
     );
+  }
+
+  void timerup() {
+    Timer(Duration(seconds: 12), () {
+      setState(() async {
+        ResultScr();
+      });
+    });
   }
 }

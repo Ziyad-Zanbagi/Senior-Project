@@ -57,9 +57,10 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.cyan),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Result/النتجية '),
+          title: const Text('Result/النتيجة '),
         ),
         body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -87,6 +88,36 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('HomeScreen');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Colors.cyan,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Center(
+                      child: Row(
+                    children: [
+                      const Icon(Icons.logout_outlined, color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: Text(
+                          'home page / الصفحة الرئيسة',
+                          style: GoogleFonts.robotoCondensed(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  )),
+                ),
+              )
             ],
             if (status_1 == true) ...[
               Image.asset(
@@ -97,10 +128,10 @@ class _ResultScreenState extends State<ResultScreen> {
               Column(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(
                       border: Border.all(width: 5, color: Colors.cyan),
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                      borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                     alignment: Alignment.center,
                     margin: EdgeInsets.all(20),
@@ -123,6 +154,38 @@ class _ResultScreenState extends State<ResultScreen> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             )),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('HomeScreen');
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Colors.cyan,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                                child: Row(
+                              children: [
+                                const Icon(Icons.logout_outlined,
+                                    color: Colors.white),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: Text(
+                                    'home page / الصفحة الرئيسة',
+                                    style: GoogleFonts.robotoCondensed(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                              ],
+                            )),
+                          ),
+                        )
                       ],
                     ),
                   ),
