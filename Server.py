@@ -8,7 +8,7 @@ import pytesseract
 # this is a dictionary of allergies and their causes
 allergies = {
     "peanuts": {
-        "causes": ["فول السوداني", "زبدة الفول السوداني"]
+        "causes": ["فول السوداني","سوداني","السوداني", "زبدة الفول السوداني"]
     },
     "milk": {
         "causes": ["حليب", "الحليب"]
@@ -29,7 +29,7 @@ allergies = {
         "causes": ["مانجو", "المانجو"]
     },
     "chocolate": {
-        "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا"]
+        "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا", "الكاكاو"]
     },
     "lactose": {
         "causes": ["جينة"]
@@ -99,13 +99,15 @@ def checkRequest(allergies):
                     # if it does it will put what allergy it was in a list
                     allergic_found.append(allergen)
         print(f"allergic found {allergic_found}")
+        allergic_no_dup = list(set(allergic_found))
+        print(allergic_no_dup)
         # final step it will post the result back to the front-end
-        todo = {"id": user_id, "allergies": allergic_found, "allergic": allergic}
+        todo = {"id": user_id, "allergies": allergic_no_dup, "allergic": allergic}
         print("sending back to front-end")
         url_back = "https://36d1-31-166-28-3.in.ngrok.io/tasks"
         response = requests.post(url_back, json=todo)
 
-        time.sleep(8)
+        time.sleep(30)
         print("request is done. deleting request from json")
         requests.delete((url_back + f"/{user_id}"))
     else:
