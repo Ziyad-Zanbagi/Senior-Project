@@ -60,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     http.post(
-      Uri.parse('https://36d1-31-166-28-3.in.ngrok.io/posts'),
+      Uri.parse(
+          'https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/posts'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -146,14 +147,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                     color: Colors.cyan,
                     borderRadius: BorderRadius.circular(12)),
-                child: Center(
-                    child: Text(
-                  'Sign out/تسجيل الخروج',
-                  style: GoogleFonts.robotoCondensed(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                )),
+                child: Row(
+                  children: [
+                    const Icon(Icons.logout_outlined, color: Colors.white),
+                    Center(
+                        child: Text(
+                      '          Sign out/تسجيل الخروج',
+                      style: GoogleFonts.robotoCondensed(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+                  ],
+                ),
               ),
             ),
           ),
@@ -169,14 +175,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 decoration: BoxDecoration(
                     color: Colors.cyan,
                     borderRadius: BorderRadius.circular(12)),
-                child: Center(
-                    child: Text(
-                  'SetAlleriges/تسجيل الحساسيات',
-                  style: GoogleFonts.robotoCondensed(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                )),
+                child: Row(
+                  children: [
+                    const Icon(Icons.checklist_outlined, color: Colors.white),
+                    Center(
+                        child: Text(
+                      '  SetAlleriges/تسجيل الحساسيات',
+                      style: GoogleFonts.robotoCondensed(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+                  ],
+                ),
               ),
             ),
           ),
@@ -236,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(child: CircularProgressIndicator());
                     },
                   );
-                  timerup();
+                  timerupCamera();
                 },
                 child: Container(
                   padding: const EdgeInsets.all(16),
@@ -262,13 +273,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
                 ),
               )),
+          SizedBox(height: 20),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18.5),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('Customersupport');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                      color: Colors.cyan,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Center(
+                      child: Row(
+                    children: [
+                      const Icon(Icons.contact_support, color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35),
+                        child: Text(
+                          'Customer Support/الدعم الفني',
+                          style: GoogleFonts.robotoCondensed(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16),
+                        ),
+                      ),
+                    ],
+                  )),
+                ),
+              ))
         ])),
       ),
     );
   }
 
   void timerup() {
-    Timer(Duration(seconds: 12), () {
+    Timer(Duration(seconds: 20), () {
+      setState(() async {
+        ResultScr();
+      });
+    });
+  }
+
+  void timerupCamera() {
+    Timer(Duration(seconds: 40), () {
       setState(() async {
         ResultScr();
       });

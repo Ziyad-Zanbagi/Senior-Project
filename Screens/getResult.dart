@@ -1,3 +1,5 @@
+//This class to save the respone in the object
+
 class getResult {
   String? id;
   List<String>? allergies;

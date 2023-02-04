@@ -1,16 +1,21 @@
+///////////////////////////////////
 import 'package:firebase_auth/firebase_auth.dart';
+///////////////////////////////////
 import 'package:flutter/material.dart';
+///////////////////////////////////
 import 'package:cloud_firestore/cloud_firestore.dart';
+///////////////////////////////////
 import 'package:google_fonts/google_fonts.dart';
 
+///////////////////////////////////
 class SetAlleriges extends StatefulWidget {
   const SetAlleriges({super.key});
-
   @override
   State<SetAlleriges> createState() => _SetAllerigesState();
 }
 
 class _SetAllerigesState extends State<SetAlleriges> {
+  ///this to create firestore instance to can used in the app
   final _firestore = FirebaseFirestore.instance;
   bool milk = false;
   bool nuts = false;
@@ -23,10 +28,11 @@ class _SetAllerigesState extends State<SetAlleriges> {
   bool chocolate = false;
   bool Peanuts = false;
   final user = FirebaseAuth.instance.currentUser!;
+  ///////////////////////////////////
+  /// to update  user Allergies
   void UpdateUser() {
     final docUser =
         FirebaseFirestore.instance.collection('Users').doc(user.uid);
-
     final userinfo = {
       'Eggs': Eggs,
       'Wheat': Wheat,
@@ -40,16 +46,19 @@ class _SetAllerigesState extends State<SetAlleriges> {
       'peanuts': Peanuts,
       'strawberry': strawberry
     };
-
     docUser.update(userinfo);
   }
 
+///////////////////////////////////
+///////////////////////////////////
+  ///Navigator to home page
   void backhome() {
     Navigator.of(context).pushNamed('HomeScreen');
   }
 
   @override
   Widget build(BuildContext context) {
+    ///this check box to user select the allergies
     return Scaffold(
         appBar: AppBar(title: const Text('Alleriges/الحساسيات')),
         body: Column(
