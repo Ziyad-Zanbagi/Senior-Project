@@ -8,39 +8,49 @@ import pytesseract
 # this is a dictionary of allergies and their causes
 allergies = {
     "peanuts": {
-        "causes": ["فول السوداني","سوداني","السوداني", "زبدة الفول السوداني"]
+        "causes": ["فول السوداني", "زبدة الفول السوداني"],
+        "arabic_allergy": "فول السوداني"
     },
     "milk": {
-        "causes": ["حليب", "الحليب"]
+        "causes": ["حليب", "الحليب"],
+        "arabic_allergy": "حليب"
     },
     "fish": {
-        "causes": ["السمك", "سمك", "اسماك"]
+        "causes": ["السمك", "سمك", "اسماك"],
+        "arabic_allergy": "سمك"
     },
     "strawberry": {
-        "causes": ["الفراولة", "فراولة"]
+        "causes": ["الفراولة", "فراولة"],
+        "arabic_allergy": "قراولة"
     },
     "eggs": {
-        "causes": ["البيض", "بيض"]
+        "causes": ["البيض", "بيض"],
+        "arabic_allergy": "بيض"
     },
     "wheat": {
-        "causes": ["فمح", "القمح"]
+        "causes": ["فمح", "القمح"],
+        "arabic_allergy": "قمح"
     },
     "mango": {
-        "causes": ["مانجو", "المانجو"]
+        "causes": ["مانجو", "المانجو"],
+        "arabic_allergy": "مانجو"
     },
     "chocolate": {
-        "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا", "الكاكاو"]
+        "causes": ["شوكولاته", "الشوكولاته", "كاكاو", "كوكوا"],
+        "arabic_allergy": "شوكولاته"
     },
     "lactose": {
-        "causes": ["جينة"]
+        "causes": ["جينة"],
+        "arabic_allergy": "لاكتوز"
     },
     "nuts": {
-        "causes": ["فستق", "لوز","كاجو"]
+        "causes": ["فستق", "لوز","كاجو"],
+        "arabic_allergy": "مكسرات"
     },
 
 }
 # url hosted in local device by node.js
-api_url = "https://36d1-31-166-28-3.in.ngrok.io/posts"
+api_url = "https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/posts"
 
 
 def checkRequest(allergies):
@@ -74,7 +84,7 @@ def checkRequest(allergies):
                 # create a writable image and write the decoding result
                 image_result.write(image_64_decode)
             # if the above condition were not met, it will check if the allergy is true and put it into a list
-            else:11
+            else:
 
                 if user_request[key] == "true":
                     print(user_request[key])
@@ -85,6 +95,7 @@ def checkRequest(allergies):
         pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
         # it will extract img we decoded above to extract the text and put it into a list via split
         image = pytesseract.image_to_string(Image.open('test.png'), lang='ara')
+
         ocr_text = list(re.split(r"[-«»;ء؛,.\s]\s*", image))
         print(ocr_text)
         # here it will start the classification function
@@ -97,14 +108,12 @@ def checkRequest(allergies):
                     print(allergen)
                     allergic = True
                     # if it does it will put what allergy it was in a list
-                    allergic_found.append(allergen)
+                    allergic_found.append(allergen +" / "+allergies[allergen]["arabic_allergy"])
         print(f"allergic found {allergic_found}")
-        allergic_no_dup = list(set(allergic_found))
-        print(allergic_no_dup)
         # final step it will post the result back to the front-end
-        todo = {"id": user_id, "allergies": allergic_no_dup, "allergic": allergic}
+        todo = {"id": user_id, "allergies": allergic_found, "allergic": allergic}
         print("sending back to front-end")
-        url_back = "https://36d1-31-166-28-3.in.ngrok.io/tasks"
+        url_back = "https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/tasks"
         response = requests.post(url_back, json=todo)
 
         time.sleep(30)
@@ -112,7 +121,6 @@ def checkRequest(allergies):
         requests.delete((url_back + f"/{user_id}"))
     else:
         print("list is empty")
-
 
 while (True):
     # code for the server to run indefinitely and check for tasks
