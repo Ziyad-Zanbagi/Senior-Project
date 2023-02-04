@@ -74,7 +74,7 @@ def checkRequest(allergies):
                 # create a writable image and write the decoding result
                 image_result.write(image_64_decode)
             # if the above condition were not met, it will check if the allergy is true and put it into a list
-            else:
+            else:11
 
                 if user_request[key] == "true":
                     print(user_request[key])
