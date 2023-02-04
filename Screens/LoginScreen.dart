@@ -1,7 +1,11 @@
+///////////////////////////////////
 import 'package:firebase_auth/firebase_auth.dart';
+///////////////////////////////////
 import 'package:flutter/material.dart';
+///////////////////////////////////
 import 'package:google_fonts/google_fonts.dart';
 
+///////////////////////////////////
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -10,9 +14,14 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  ///this emailControl is used to save the text here by the TextField widget
   final _emailControl = TextEditingController();
+
+  ///this passwordControl is used to save the text here by the TextField widget
   final _passwordControl = TextEditingController();
 
+///////////////////////////////////
+  ///the method to user sign in into the app
   Future SignIN() async {
     showDialog(
       context: context,
@@ -26,10 +35,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Navigator.of(context).pop();
   }
+///////////////////////////////////
 
+///////////////////////////////////
+  ///Navigator signup page
   void opensignupScreen() {
     Navigator.of(context).pushReplacementNamed('signupScreen');
   }
+  ///////////////////////////////////
 
   @override
   Widget build(BuildContext context) {

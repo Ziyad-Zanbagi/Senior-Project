@@ -1,46 +1,65 @@
+///////////////////////////////////
 import 'package:cloud_firestore/cloud_firestore.dart';
+///////////////////////////////////
 import 'package:firebase_auth/firebase_auth.dart';
+///////////////////////////////////
 import 'package:flutter/material.dart';
+///////////////////////////////////
 import 'package:google_fonts/google_fonts.dart';
 
+///////////////////////////////////
 class signupScreen extends StatefulWidget {
   const signupScreen({super.key});
-
   @override
   State<signupScreen> createState() => _signupScreenState();
 }
 
 class _signupScreenState extends State<signupScreen> {
+  ///this emailControl is used to save the text here by the TextField widget
   final _emailControl = TextEditingController();
+
+  ///this passwordControl is used to save the text here by the TextField widget
   final _passwordControl = TextEditingController();
+
+  ///this to create firestore instance to can used in the app
   final _firestore = FirebaseFirestore.instance;
   late User singedInUser;
-  final _auth = FirebaseAuth.instance;
 
+  ///this to create FirebaseAuth instance to can used in the app
+  final _auth = FirebaseAuth.instance;
+///////////////////////////////////
+  ///This method is to save the user signup infomation into the firebase
   Future SignUP() async {
+    /// this widget is show circel in the screen until the user sign up
     showDialog(
         context: context,
         builder: (context) {
           return Center(child: CircularProgressIndicator());
         });
+
+    ///here the line are the create the user account depend on what user write in the Textfield
     await _auth.createUserWithEmailAndPassword(
         email: _emailControl.text.trim(),
         password: _passwordControl.text.trim());
     getCurrentUser();
-    createUser();
+    createDocument();
     Navigator.of(context).pop();
     Navigator.of(context).pushNamed('/');
   }
 
-  void createUser() {
+///////////////////////////////////
+///////////////////////////////////
+  ///this method to create to document(Record) in the firestore depend the firebase auto genrate UserID to each user
+  void createDocument() {
     final docUser =
         FirebaseFirestore.instance.collection('Users').doc(singedInUser.uid);
 
-    final info = {
+    ///all allergies be fasle until the user change it depend what he/she have
+    final userAllergy = {
+      'email': singedInUser.email,
       'Eggs': false,
       'Wheat': false,
       'chocolate': false,
-      'email': singedInUser.email,
       'fish': false,
       'lactose': false,
       'mango': false,
@@ -50,9 +69,11 @@ class _signupScreenState extends State<signupScreen> {
       'strawberry': false
     };
 
-    docUser.set(info);
+    docUser.set(userAllergy);
   }
 
+///////////////////////////////////
+  ///This method to take to Current user info
   void getCurrentUser() {
     try {
       final user = _auth.currentUser;
@@ -64,10 +85,15 @@ class _signupScreenState extends State<signupScreen> {
     }
   }
 
+///////////////////////////////////
+  ///Navigator to signup page
   void opensignupScreen() {
     Navigator.of(context).pushReplacementNamed('signupScreen');
   }
+///////////////////////////////////
 
+///////////////////////////////////
+  ///Navigator to Sign in page
   void SignINpage() {
     Navigator.of(context).pushReplacementNamed('LoginScreen');
   }

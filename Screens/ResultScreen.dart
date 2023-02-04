@@ -20,8 +20,8 @@ class _ResultScreenState extends State<ResultScreen> {
   getResult? user;
   getDatt() async {
     try {
-      final response = await http
-          .get(Uri.parse("https://36d1-31-166-28-3.in.ngrok.io/tasks"));
+      final response = await http.get(Uri.parse(
+          "https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/tasks"));
       if (response.statusCode == 200) {
         print("conntion is working ");
         var responseData = jsonDecode(response.body);
@@ -49,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     getDatt();
-    // await widget.tasksAPi.getTasks();
+
     super.initState();
   }
 
@@ -143,7 +143,7 @@ class _ResultScreenState extends State<ResultScreen> {
                           height: 60,
                         ),
                         Text(
-                          'You have allergies from that ',
+                          'You have allergies from that/الحساسيات التي لديك هي  ',
                           style: GoogleFonts.robotoCondensed(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
