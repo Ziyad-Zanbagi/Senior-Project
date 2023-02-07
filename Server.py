@@ -50,7 +50,7 @@ allergies = {
 
 }
 # url hosted in local device by node.js
-api_url = "https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/posts"
+api_url = "https://8bdc-31-166-28-3.in.ngrok.io/posts"
 
 def spliting_request(user_request):
     # split requests based on key that came from user request
@@ -102,6 +102,15 @@ def is_allergic(allergic_found):
     return allergic
 
 
+def OCR():
+    # the line below needed for the OCR
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+    # it will extract img we decoded above to extract the text and put it into a list via split
+    image = pytesseract.image_to_string(Image.open('test.png'), lang='ara')
+
+    ocr_text = list(re.split(r"[-«»;ء؛,.\s]\s*", image))
+    return ocr_text
+
 def checkRequest(allergies):
     response = requests.get(api_url)
     tasks = response.json()
@@ -122,12 +131,7 @@ def checkRequest(allergies):
         print(user_id)
         #  here it will start the OCR function
 
-        # the line below needed for the OCR
-        pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-        # it will extract img we decoded above to extract the text and put it into a list via split
-        image = pytesseract.image_to_string(Image.open('test.png'), lang='ara')
-
-        ocr_text = list(re.split(r"[-«»;ء؛,.\s]\s*", image))
+        ocr_text = OCR()
         print(ocr_text)
         allergic_found = text_classification(user_allergy,ocr_text)
         allergic = is_allergic(allergic_found)
@@ -135,7 +139,7 @@ def checkRequest(allergies):
         # final step it will post the result back to the front-end
         todo = {"id": user_id, "allergies": allergic_found, "allergic": allergic}
         print("sending back to front-end")
-        url_back = "https://d977-2a02-9b0-402b-d298-10c9-2e2f-13a9-243a.eu.ngrok.io/tasks"
+        url_back = "https://8bdc-31-166-28-3.in.ngrok.io/tasks"
         response = requests.post(url_back, json=todo)
 
         time.sleep(30)
